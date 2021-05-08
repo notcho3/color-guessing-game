@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Guessing Game</title>
+  </head>
+  <body>
+    <h1>Color Guessing Game</h1>
+    <button type="button" onclick="runGame()">Start Game</button>
+    <script>
+      const COLORS_ARRAY = [
+        "blue",
+        "cyan",
+        "gold",
+        "gray",
+        "green",
+        "magenta",
+        "orange",
+        "red",
+        "white",
+        "yellow",
+      ];
+      function runGame() {
+        let guess = "";
+        let correct = false;
+        const targetIndex = Math.floor(Math.random() * COLORS_ARRAY.length);
+        const target = COLORS_ARRAY[targetIndex];
+        let numTries = 0;
+
+        do {
+          numTries++;
+          guess = prompt(
+            "I am thinking of one of these colors:\n\n" +
+              COLORS_ARRAY.join(", ") +
+              " What color am I thinking of?\n"
+          );
+          if (guess === null) {
+            alert("The game has been aborted!");
+            return;
+          }
+          correct = checkGuess(guess, target);
+        } while (!correct);
+        alert(
+          "Congratualtions you have picked the correct color! It took " +
+            numTries +
+            " number of tries!"
+        );
+        document.body.style.background = guess;
+      }
+
+      function checkGuess(guess, target) {
+        let correct = false;
+        if (COLORS_ARRAY.includes(guess)) {
+          if (guess > target) {
+            alert(
+              "Hint: Your guess is alphabetically higher than mine.\n\ Please try again!"
+            );
+          } else if (guess < target) {
+            alert(
+              "Hint: Your guess is alphabetically lower than mine.\n\ Please try again!"
+            );
+          } else {
+            correct = true;
+          }
+          return correct;
+        } else {
+          alert("This color is not in the array");
+        }
+      }
+    </script>
+  </body>
+</html>
